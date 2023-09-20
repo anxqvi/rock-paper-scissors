@@ -1,5 +1,5 @@
 function getComputerChoice() {
-    random = Math.floor(Math.random() * 3);
+    let random = Math.floor(Math.random() * 3);
     if (random == 0) {
         return "rock";
     }
@@ -19,26 +19,56 @@ function playRound(playerSelection, computerSelection) {
     if ((playerSelection.localCompare("paper") && computerSelection.localCompare("rock")) || 
     (playerSelection.localCompare("rock") && computerSelection.localCompare("scissors")) || 
     (playerSelection.localCompare("scissors") && computerSelection.localCompare("paper"))) {
-        return 'You Win! ${playerSelection} beats ${computerSelection}!';
+        console.log('You Win! ${playerSelection} beats ${computerSelection}!');
+        return 1
     }
 
     else if ((playerSelection.localCompare("paper") && computerSelection.localCompare("scissors")) || 
     (playerSelection.localCompare("rock") && computerSelection.localCompare("paper")) || 
     (playerSelection.localCompare("scissors") && computerSelection.localCompare("rock"))) {
-        return 'You Lose! ${playerSelection} loses to ${computerSelection}!';
+        console.log('You Lose! ${playerSelection} loses to ${computerSelection}!');
+        return -1
     }
 
     else if ((playerSelection.localCompare("paper") && computerSelection.localCompare("paper")) || 
     (playerSelection.localCompare("rock") && computerSelection.localCompare("rock")) || 
     (playerSelection.localCompare("scissors") && computerSelection.localCompare("scissors"))) {
-        return 'You Draw! ${playerSelection} draws with ${computerSelection}!';
+        console.log('You Draw! ${playerSelection} draws with ${computerSelection}!');
+        return 0
     }
 
     else {
-        return "You have inputted an invalid selection";
+        return "Invalid";
     }
 }
 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    let check = 5;
+    for (i = 0; i < check; i++) {
+        let playerSelection = prompt("Please pick either: rock, paper or scissors");
+        let computerSelection = getComputerChoice();
+        let result = playRound(playerSelection, computerSelection);
+        if (result == 1) {
+            playerScore++;
+        }
+        else if (result == -1) {
+            computerScore++;
+        }
+        else if (result == "Invalid") {
+            check++;
+            alert("Your input was invalid! Please insert either 'rock', 'paper', or 'scissors' without quotations.");
+        }
+    }
+
+    if (playerScore > computerScore) {
+        return console.log("Congratulations, you won!");
+    }
+    else if (computerScore > playerScore) {
+        return console.log("Unfortunately, you lost!");
+    }
+    else {
+        return console.log("It was a draw!");
+    }
+}
